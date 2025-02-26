@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block title %}
+chai aur Django
+{% endblock %}
+
+{% block content %}
+<div class="tweet-container mt-4">
+    <h1 class="text-center mb-4" style="color: var(--accent-color);">Tweet Feed</h1>
+    
+    <div class="d-flex justify-content-end mb-4">
+        <a class="btn btn-primary" href="{% url 'tweet_create' %}">
+            <i class="fas fa-plus"></i> Create Tweet
+        </a>
+    </div>
+
+    <div class="row g-4">
+        {% for tweet in tweets %}
+        <div class="col-md-4">
+            <div class="card tweet-card h-100">
+                {% if tweet.photo %}
+                <img src="{{tweet.photo.url}}" class="card-img-top tweet-image" alt="Tweet image">
+                {% endif %}
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="user-avatar" style="background-color: var(--secondary-bg);">
+                            {{ tweet.user.username|first }}
+                        </div>
+                        <h5 class="card-title mb-0 ms-2">{{tweet.user.username}}</h5>
+                    </div>
+                    <p class="card-text">{{tweet.text}}</p>
+                    {% if tweet.user == user %}
+                    <div class="tweet-actions">
+                        <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-sm" 
+                           style="background-color: var(--accent-color); color: white;">Delete</a>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer text-muted">
+                    {{ tweet.created_at|timesince }} ago
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .tweet-card {
+        transition: transform 0.3s;
+        border-radius: 15px;
+    }
+    
+    .tweet-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(var(--accent-color), 0.2);
+    }
+
+    .tweet-image {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}

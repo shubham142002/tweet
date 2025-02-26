@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+chai aur Django
+{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <div id="tweetCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for tweet in featured_tweets %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div class="carousel-tweet-card">
+                    <img src="{{ tweet.photo.url }}" class="d-block w-100" alt="Tweet Image">
+                    <div class="carousel-caption">
+                        <h5>{{ tweet.user.username }}</h5>
+                        <p>{{ tweet.text }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#tweetCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#tweetCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="{% url 'tweet_list' %}" class="btn btn-lg" style="background-color: #800000; color: white;">
+            Start Tweeting
+        </a>
+    </div>
+</div>
+{% endblock %}

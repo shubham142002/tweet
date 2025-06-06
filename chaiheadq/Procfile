@@ -1,1 +1,1 @@
-web: gunicorn chaiheadq.wsgi
+web: cd chaiheadq && gunicorn chaiheadq.wsgi:application

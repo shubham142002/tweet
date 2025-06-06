@@ -1,1 +1,1 @@
-web: cd chaiheadq && gunicorn chaiheadq.wsgi:application
+web: gunicorn --pythonpath chaiheadq chaiheadq.wsgi:application

@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: chaiheadq
+    env: python
+    buildCommand: chmod +x build.sh && ./build.sh
+    startCommand: gunicorn --pythonpath chaiheadq chaiheadq.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: false
+      - key: DATABASE_URL
+        value: sqlite:///db.sqlite3
